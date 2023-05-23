@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
-  width: 85,5%;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
   height: 100vh; 
   display: flex;
-  background-color: ${({theme}) => theme.colors.mainPeach};;
+  
+  background-color: ${({theme}) => theme.colors.mainWhite};;
 `;
 
 export const ContentContainer = styled.div`

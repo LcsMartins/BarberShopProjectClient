@@ -1,9 +1,8 @@
 import React from 'react';
-import { AppNavigation, Link, SecondSection, Page, FirstSection, Title, Menu, MenuButton } from './style';
+import { AppNavigation, Link, SecondSection, FirstSection, Title, Menu, MenuButton, ThirdSection, BemVindo, IndicadorPagina } from './style';
 
 const Nav = () => {
   return (
-    <Page>
         <AppNavigation>
 
             <FirstSection>
@@ -15,16 +14,16 @@ const Nav = () => {
             </FirstSection>
 
             <SecondSection>
-                <Link href="/home" className="Home">Minhas reservas</Link>
+                <IndicadorPagina href="/home" className="Home">Minhas reservas</IndicadorPagina>
                 <Link href="" className="Reservar">Reservar Horario</Link>
                 <Link href="" className="Conta">Minha conta</Link>
             </SecondSection>
 
-            <SecondSection>
-                <Link href="" className="Reservar">terceira</Link>
-            </SecondSection>
+            <ThirdSection>
+                <BemVindo>Bem vindo</BemVindo>
+                <p>Exibindo suas reservas existentes</p>
+            </ThirdSection>
         </AppNavigation>
-    </Page>
   );
 }
 

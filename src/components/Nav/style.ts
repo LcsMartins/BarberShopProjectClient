@@ -1,15 +1,8 @@
 import styled from 'styled-components';
 
-export const Page = styled.div`
+//falta deixar a parte circular da second section, pegar um azul mais escuro, estilizar nos botões registrar e logar
+export const AppNavigation = styled.div` //perguntar dessa sintaxe
     background-color: ${({theme}) => theme.colors.mainBlue};
-    width: 100vw;
-    height: 300px;
-    position: fixed;
-`
-export const AppNavigation = styled.div`
-    display:grid;
-    grid-template-rows: repeat(3, 1fr);
-    font-size: 40px;
     width: 100vw;
     height: 300px;
     position: fixed;
@@ -17,55 +10,80 @@ export const AppNavigation = styled.div`
 //botao com p ou link
 export const FirstSection = styled.div`
     display: flex;
-    width: 60%;
-    height: 40%;
-    font-size: 20px;
+    justify-content: space-between;
+    width: 70%;
+    height: 25%;
+    font-size: 1em;
     align-items: start;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 25px;
+    padding-top: 25px;
 `  
 export const Title = styled.a`
     text-align: left;
     text-decoration: none;
     color: #fff;
     font-weight: 900;
-    font-size 25px;
-    width: 200px;
-    height: 100px;
+    font-size: 1.5em;
 `
 export const Menu = styled.div`
-    margin-left: 500px;
-    background-color: red; 
-    gap: 10px;
 `
 export const MenuButton = styled.button`
     border: 2px solid white;
-    border-radius: 2px;
+    border-radius: 10px;
     padding: 10px;
+    margin-left:1.25em;
 `
-
+//usar flex wrap nos cards de reservas
 export const SecondSection = styled.div`
-    display: flex;
-    width: 60%;
-    height: 100%;
-    font-size: 20px;
-    align-items: top;
+    gap: 20px;
+    text-align: left;
+    width: 70%;
+    height: 40%;
+    font-size: 1.25em;
     margin-left: auto;
     margin-right: auto;
-    text-align: left;
 `  
-
-
+// perguntar do por que padding: 10px da ruim
 export const Link = styled.a`
+    margin-right: 1.25em;
     text-decoration: none;
     cursor: pointer;
     color: #fff;
     font-size: 20x;
     width: 70%;
+
     &:hover{
-        box-shadow: 0 0 10px blue
+        background-color: ${({theme}) => theme.colors.thirdBlue};
+        border-radius: 10px;
+        padding: 10px
     }
+`
+export const IndicadorPagina = styled.a`
+    margin-right: 1.25em;
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 20x;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+
+    background-color:${({theme}) => theme.colors.secondBlue};
+`
+
+export const ThirdSection = styled.div`
+    text-align: left;
+    width: 70%;
+    color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+` 
+//perguntar da duvida do font-size em cima 1.5em ser maior
+
+export const BemVindo = styled.a`
+    font-weight: 750;
+    font-size: 2em;
 `
 
 export const Wrapper = styled.span`
