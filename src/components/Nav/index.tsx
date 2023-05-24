@@ -21,7 +21,7 @@ const Nav = () => {
 
             <ThirdSection>
                 <BemVindo>Bem vindo</BemVindo>
-                <p>Exibindo suas reservas existentes</p>
+                <p>Exibindo suas reservas</p>
             </ThirdSection>
         </AppNavigation>
   );

@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 
-//falta deixar a parte circular da second section, pegar um azul mais escuro, estilizar nos botões registrar e logar
-export const AppNavigation = styled.div` //perguntar dessa sintaxe
-    background-color: ${({theme}) => theme.colors.mainBlue};
+// pegar um azul mais escuro, estilizar nos botões registrar e logar
+//%{} indicando js
+//()=> arrow func
+//{theme} desestruturação do obj
+export const AppNavigation = styled.div` 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: ${({theme}) => theme.colors.mainBlue };
     width: 100vw;
-    height: 300px;
+    height: 250px;
     position: fixed;
 `
 //botao com p ou link
@@ -14,10 +20,9 @@ export const FirstSection = styled.div`
     width: 70%;
     height: 25%;
     font-size: 1em;
-    align-items: start;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 25px;
+    padding-top: 15px;
+    background-color: ${({theme})=>theme.colors.mainBlue}
+
 `  
 export const Title = styled.a`
     text-align: left;
@@ -27,12 +32,14 @@ export const Title = styled.a`
     font-size: 1.5em;
 `
 export const Menu = styled.div`
+    display: flex;
+    gap:10px;
+    margin-right: 15px;
 `
 export const MenuButton = styled.button`
     border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
-    margin-left:1.25em;
 `
 //usar flex wrap nos cards de reservas
 export const SecondSection = styled.div`
@@ -41,10 +48,9 @@ export const SecondSection = styled.div`
     width: 70%;
     height: 40%;
     font-size: 1.25em;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top:1em;
 `  
-// perguntar do por que padding: 10px da ruim
+// estudar padding,
 export const Link = styled.a`
     margin-right: 1.25em;
     text-decoration: none;
@@ -52,7 +58,6 @@ export const Link = styled.a`
     color: #fff;
     font-size: 20x;
     width: 70%;
-
     &:hover{
         background-color: ${({theme}) => theme.colors.thirdBlue};
         border-radius: 10px;
@@ -76,10 +81,11 @@ export const ThirdSection = styled.div`
     text-align: left;
     width: 70%;
     color: #fff;
-    margin-left: auto;
-    margin-right: auto;
-` 
-//perguntar da duvida do font-size em cima 1.5em ser maior
+
+    p{
+        font-size: 1.2em;
+    }
+`
 
 export const BemVindo = styled.a`
     font-weight: 750;

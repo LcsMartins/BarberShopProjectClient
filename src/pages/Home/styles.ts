@@ -2,15 +2,18 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100vh; 
-  display: flex;
-  
-  background-color: ${({theme}) => theme.colors.mainWhite};;
+  height: 100vh;
+  margin-left:auto;
+  margin-right:auto;
+  padding-top: 15%;
+  background-color: ${({theme}) => theme.colors.mainPeach};
 `;
 
+//
 export const ContentContainer = styled.div`
+  flex-wrap: wrap;
   display: flex;
-  gap: 15px;
+  gap: 21px;
 `;
+
+//titulo, vigentes, card //// titulo, passado, card

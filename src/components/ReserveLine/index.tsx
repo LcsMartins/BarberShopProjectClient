@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContentContainer, Wrapper } from './style';
+import { CardContainer, Wrapper } from './style';
 
 interface ReserveProps {
     id: string,
@@ -14,11 +14,11 @@ export const ReserveLine: React.ElementType<ReserveProps> = ({
     customerId,
     barberId,
 }) => (
-            <ContentContainer>
-                <h1>Dia {dateTime}</h1> 
+            <CardContainer>
+                <p>Horário {dateTime}</p> 
                 <Wrapper/>
                 <p>Cliente: {customerId}</p>
                 <Wrapper/>
                 <p>Barbeiro: {barberId}</p>
-            </ContentContainer>
+            </CardContainer>
 );
