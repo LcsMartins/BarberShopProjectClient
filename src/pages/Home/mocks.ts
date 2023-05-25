@@ -3,7 +3,7 @@ export const FakeAppointments =[
         id: '7bc5d584-4ecc-4e89-864e-19b349a2ae03',
         dateTime: '11-04-2023',
         customerId: 'Lucas',
-        barberId: 'Felipe',
+        barberId: 'Will',
     },
     {
         id: '7bc5d584-4ecc-4e89-864e-19b349a2ae03',

@@ -1,6 +1,6 @@
 import React from 'react';
-import { CardContainer, Wrapper } from './style';
-
+import { Card, Dados, Image, Wrapper } from './style';
+import Will from '../../assets/images/will.jpg'
 interface ReserveProps {
     id: string,
     dateTime: string,
@@ -14,11 +14,16 @@ export const ReserveLine: React.ElementType<ReserveProps> = ({
     customerId,
     barberId,
 }) => (
-            <CardContainer>
-                <p>Horário {dateTime}</p> 
+        <Card>
+            <Image src= {Will}>
+            </Image>
+            <Dados>
+                <p>{barberId}</p>
                 <Wrapper/>
-                <p>Cliente: {customerId}</p>
+                <p> {dateTime}</p> 
                 <Wrapper/>
-                <p>Barbeiro: {barberId}</p>
-            </CardContainer>
+                <p>Concluída</p>
+                
+            </Dados>
+        </Card>
 );

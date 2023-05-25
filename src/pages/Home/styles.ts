@@ -5,11 +5,11 @@ export const MainContainer = styled.div`
   height: 100vh;
   margin-left:auto;
   margin-right:auto;
-  padding-top: 15%;
-  background-color: ${({theme}) => theme.colors.mainPeach};
+  padding-top: 20%;
+  
 `;
 
-//
+//background-color: ${({theme}) => theme.colors.mainPeach};
 export const ContentContainer = styled.div`
   flex-wrap: wrap;
   display: flex;

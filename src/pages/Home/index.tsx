@@ -27,7 +27,7 @@ const Home: React.FC = () => {
     return (
       <MainContainer>
         <ContentContainer>
-              {FakeAppointments.map(({ id, dateTime, customerId, barberId }) => (
+              {FakeAppointments.map(({ id, dateTime, customerId, barberId }) =>  (
                   <ReserveLine
                   id={id}
                   dateTime={dateTime}
