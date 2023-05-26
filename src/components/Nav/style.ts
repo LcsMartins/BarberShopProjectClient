@@ -11,7 +11,6 @@ export const AppNavigation = styled.div`
     background-color: ${({theme}) => theme.colors.mainBlue };
     width: 100vw;
     height: 250px;
-    position: fixed;
 `
 //botao com p ou link
 export const FirstSection = styled.div`
