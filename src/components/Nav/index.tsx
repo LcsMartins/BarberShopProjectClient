@@ -33,8 +33,10 @@ const Nav = () => {
             </SecondSection>
 
             <ThirdSection>
-                <BemVindo>Bem vindo, {user?.name} </BemVindo>
-                <p>Exibindo suas reservas</p>
+                
+                { url === '/home' || url === '/'  ? (<div><BemVindo>Bem vindo, {user?.name} </BemVindo> <p>Exibindo suas reservas</p></div>) : null }
+                { url === '/reservar' ? (<div> <p>Selecione o profissional e horário de sua preferência</p></div>) : null}
+                { url === '/conta' ? (<div> <p>Exibindo suas informações e dados pessoais</p></div>) : null}
             </ThirdSection>
         </AppNavigation>
   );

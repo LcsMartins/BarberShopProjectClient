@@ -20,7 +20,7 @@ export const FirstSection = styled.div`
     height: 25%;
     font-size: 1em;
     padding-top: 15px;
-    background-color: ${({theme})=>theme.colors.mainBlue}
+    background-color: ${({theme})=>theme.colors.mainBlue};
 
 `  
 export const Title = styled.a`
@@ -39,13 +39,14 @@ export const MenuButton = styled.button`
     border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
+    font-weight: 700;
 `
 //usar flex wrap nos cards de reservas
 export const SecondSection = styled.div`
     gap: 20px;
     text-align: left;
     width: 70%;
-    height: 40%;
+    height: 40vh;
     font-size: 1.25em;
     margin-top:1em;
 `  

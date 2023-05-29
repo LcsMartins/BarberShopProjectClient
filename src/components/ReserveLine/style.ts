@@ -18,6 +18,7 @@ export const Image = styled.img`
   height:125px;
 
 `
+
 export const Dados = styled.div`
   display: flex;
   height:125px;
@@ -28,7 +29,7 @@ export const Dados = styled.div`
   border-radius: 8px;
   padding: 15px;
   cursor: pointer;
-`;
+`
 
 export const Wrapper = styled.span`
     height: 1px;

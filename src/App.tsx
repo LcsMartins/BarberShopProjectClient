@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './assets/theme';
 import GlobalStyle from './assets/global';
 import { UserProvider } from './utils/useUser';
+import Account from './pages/Account';
 
 const App: React.FC = () => {
   
@@ -14,7 +15,7 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <UserProvider>
           <Nav/>
-          <Home/>
+          <Account/>
         <GlobalStyle/>  
         </UserProvider>
       </ThemeProvider>
@@ -23,4 +24,3 @@ const App: React.FC = () => {
 }
 
 export default App;
-

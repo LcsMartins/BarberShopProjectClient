@@ -18,9 +18,8 @@ const Home: React.FC = () => {
         await fetch(`${api}appointments/${id}?flag=1`, {headers,})   
                 .then(response => response.json())
                 .then(data => setReserves(data));
-
         },[]) 
-        
+
         //useEffect(()=>{loadCustomers()},[loadCustomers])
         //useEffect(()=>{console.log(reserves)},[reserves])
         
@@ -30,14 +29,10 @@ const Home: React.FC = () => {
         // vigenteFlag = 1;
         //dps mapear ordenado já, do mais recente pro mais antigo
 
-        
         const testeDiv = [];
     return (
-      
       <MainContainer>
-
         <ContentContainer>
-
           {(testeDiv.length === 0) ? (
             <SugestaoSection>
               <Aviso>
@@ -46,7 +41,6 @@ const Home: React.FC = () => {
               <ReservaButton>
                 Sim, reservar agora
               </ReservaButton>
-               
             </SugestaoSection>) : null }
             
               {FakeAppointments.map(({ id, dateTime, customerId, barberId }) =>  (
