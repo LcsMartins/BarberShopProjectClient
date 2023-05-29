@@ -28,15 +28,15 @@ const Nav = () => {
 
             <SecondSection>
                 { url === '/home' || url === '/'  ? (<IndicadorPagina href="/home" className="Home">Minhas reservas</IndicadorPagina>) : (<Link href="/home" className="Home">Minhas reservas</Link>)}
-                { url === '/reservar' ? (<IndicadorPagina href="/reservar" className="Reservar">Reservar Horario</IndicadorPagina>) : (<Link href="/reservar" className="Reservar">Reservar Horario</Link>)}
-                { url === '/conta' ? (<IndicadorPagina href="/conta" className="Conta">Minha conta</IndicadorPagina>) : (<Link href="/conta" className="Conta">Minha conta</Link>)}
+                { url === '/reserve' ? (<IndicadorPagina href="/reserve" className="Reserve">Reservar Horario</IndicadorPagina>) : (<Link href="/reserve" className="Reserve">Reservar Horario</Link>)}
+                { url === '/account' ? (<IndicadorPagina href="/Account" className="Conta">Minha conta</IndicadorPagina>) : (<Link href="/account" className="Account">Minha conta</Link>)}
             </SecondSection>
 
             <ThirdSection>
                 
                 { url === '/home' || url === '/'  ? (<div><BemVindo>Bem vindo, {user?.name} </BemVindo> <p>Exibindo suas reservas</p></div>) : null }
-                { url === '/reservar' ? (<div> <p>Selecione o profissional e horário de sua preferência</p></div>) : null}
-                { url === '/conta' ? (<div> <p>Exibindo suas informações e dados pessoais</p></div>) : null}
+                { url === '/reserve' ? (<div> <p>Selecione o profissional e horário de sua preferência</p></div>) : null}
+                { url === '/account' ? (<div> <p>Exibindo suas informações e dados pessoais</p></div>) : null}
             </ThirdSection>
         </AppNavigation>
   );

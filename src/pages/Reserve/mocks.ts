@@ -24,3 +24,15 @@ export const FakeAppointments =[
         barberId: 'Romano',
     },
 ];
+
+export const FakeBarbers = [
+    {   
+        barberId: 'Will',
+    },
+    {   
+        barberId: 'Felipe',
+    },
+    {   
+        barberId: 'Romano',
+    },
+]

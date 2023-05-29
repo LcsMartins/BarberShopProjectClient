@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-// pegar um azul mais escuro, estilizar nos botões registrar e logar
-//%{} indicando js
-//()=> arrow func
-//{theme} desestruturação do obj
 export const AppNavigation = styled.div` 
     display: flex;
     flex-direction: column;
@@ -26,7 +22,7 @@ export const FirstSection = styled.div`
 export const Title = styled.a`
     text-align: left;
     text-decoration: none;
-    color: #fff;
+    color: ${({theme})=>theme.colors.mainWhite};
     font-weight: 900;
     font-size: 1.5em;
 `
@@ -55,7 +51,7 @@ export const Link = styled.a`
     margin-right: 1.25em;
     text-decoration: none;
     cursor: pointer;
-    color: #fff;
+    color: ${({theme})=>theme.colors.mainWhite};
     font-size: 20x;
     width: 70%;
     &:hover{
@@ -68,7 +64,7 @@ export const IndicadorPagina = styled.a`
     margin-right: 1.25em;
     text-decoration: none;
     cursor: pointer;
-    color: #fff;
+    color: ${({theme})=>theme.colors.mainWhite};
     font-size: 20x;
     border: 2px solid white;
     border-radius: 10px;
@@ -80,7 +76,7 @@ export const IndicadorPagina = styled.a`
 export const ThirdSection = styled.div`
     text-align: left;
     width: 70%;
-    color: #fff;
+    color: ${({theme})=>theme.colors.mainWhite};
 
     p{
         font-size: 1.2em;
@@ -95,5 +91,5 @@ export const BemVindo = styled.a`
 export const Wrapper = styled.span`
     height: 1px;
     width: 80%;
-    background-color: #fff;
+    background-color: ${({theme})=>theme.colors.mainWhite};
 `

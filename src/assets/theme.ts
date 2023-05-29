@@ -8,6 +8,7 @@ const theme = {
         skyBlue: '#89ABE3',
         secondBlue: '#2F3C7E',
         thirdBlue: 'royalBlue',
+
         }
 }
 

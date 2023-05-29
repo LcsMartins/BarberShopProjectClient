@@ -35,9 +35,3 @@ export const EditLink = styled.a`
     color: ${({theme})=>theme.colors.mainBlue};
 `
 
-export const Wrapper = styled.span`
-    height: 100px;
-    width: 100%;
-    background-color: #ffff;
-    color: #ffff;
-`;
