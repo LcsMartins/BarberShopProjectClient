@@ -21,9 +21,6 @@ function daysInMonth(month: number, year: number): number { // Use 1 for January
   return new Date(year, month, 0).getDate();
 }
 
-function endsWithNumber(str: string) {
-  return /[0-9]+$/.test(str);
-}
 
 function removeItem(item: any, array: any){
   var index = array.indexOf(item);
@@ -32,19 +29,94 @@ function removeItem(item: any, array: any){
     }
     return array;
 }
+
+//criar um obj e jogar os day,month,year etc, igual linha 69
+interface DateInfos{
+  hour: number;
+  day: number,
+  month: number,
+  year: number,
+  numberDaysThisMonth: number[],
+  numberDaysNextMonth: number[],
+}
+const emptyDate = {
+  hour: -1,
+  day: -1,
+  month: -1,
+  year: -1,
+  numberDaysThisMonth: [-1],
+  numberDaysNextMonth: [-1],
+}
+function fillDaysMonth(date : DateInfos){
+  let daysCount = daysInMonth(date.month+1, date.year);
+  let i = date.day
+
+  while((date.numberDaysThisMonth).length > 0){
+    date.numberDaysThisMonth.pop();
+  }
+  while(i <= daysCount){
+    date.numberDaysThisMonth.push(i);
+    i++;
+  }
+  //next month below
+  if(date.month === 11){
+    daysCount = daysInMonth(date.month+2, date.year++);
+  }else {
+    daysCount = daysInMonth(date.month+2, date.year);
+  }
+
+  while((date.numberDaysNextMonth).length > 0){
+    date.numberDaysNextMonth.pop();
+  }
+  i = 1;
+  while(i <= daysCount){
+    date.numberDaysNextMonth.push(i);
+    i++;
+  }
+}
+
+function getCurrentDate(date : DateInfos){
+  let current = new Date();
+  date.hour = current.getHours();
+  date.day = current.getDate();
+  date.month = current.getMonth();
+  date.year = current.getFullYear();
+  fillDaysMonth(date);
+  return date
+}
+
+function getBusyHours(appointments : Appointment[], newAppointment: Appointment){
+  let busyHours = [''];
+  if(newAppointment.dateTime !== ''){
+      busyHours.pop();
+      appointments.map((item) =>(item.dateTime).includes(newAppointment.dateTime)? busyHours.push(item.dateTime) : null );
+  }
+  return busyHours;
+}
+
+const shortMonths = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro','janeiro'];
+//let hoursAvailable = [7,8,9,10,11,12,13,14,15,16,17,18,19];
+
 const Reserve: React.FC = () => {
 
   const [barbers, setBarbers] = useState(FakeBarbers);
   const [appointments, setAppointments] = useState(FakeAppointments);
-  const [newAppointment, setNewAppointment] = useState(initialAppointment);
+  const [newDateTime, setDateTime] = useState(''); //bo aquii
 
+  const [newAppointment, setNewAppointment] = useState(initialAppointment);
+  const [selectedDayFlag, setSelectedDayFlag] = useState(false);
+  const [selectedHourFlag, setSelectedHourFlag] = useState(false);
+  const[currentDate, setCurrentDate] = useState(emptyDate);
+  useEffect(()=>{setCurrentDate(getCurrentDate(currentDate))},[]);
+
+  const[ocupadas, setOcupadas] = useState(['']);
+  let busyHours = getBusyHours(appointments, newAppointment);
   
-  let newDateTime = '';
+  let auxxxxx ='';
   let current = new Date();
   let day = current.getDate();
   let month = current.getMonth();
   let year = current.getFullYear();
-
 
   let days = []
   let numberDaysInMonth = daysInMonth(month+1,year)
@@ -62,59 +134,63 @@ const Reserve: React.FC = () => {
       day++;
     }
 
-  const shortMonths = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro','janeiro'];
 
   const handleBarberChange = (event:any) => {
-  setNewAppointment((prevAppointments) => ({...prevAppointments, barberId: event.target.value, dateTime:''}))
+      if(newAppointment.barberId !== event.target.value){
+        setSelectedDayFlag(true);
+        setSelectedHourFlag(true);
+      }
+      setNewAppointment((prevAppointments) => ({...prevAppointments, barberId: event.target.value, dateTime:''}))
   }
 
   const handleDayChange = (event:any) => {
-    if(event.target.value === ''){
-  setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime:''}))
-
-    }else{
-      let values = event.target.value.split(',');
-      if(values[0] < 10) {values[0] = '0' + values[0]}
-      if(values[1] < 10) {values[1] = '0' + values[1]}
-      newDateTime = `${year}-${values[1]}-${values[0]}T`
-      setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: newDateTime}))
-    }
-  }
-
-  let hour = 7;
-  let hoursAvailable: number[] = [];
-  while(hour <= 18){
-    hoursAvailable.push(hour)
-    hour++;
-  }
-
-  //pegando os horarios ocupados e colocando em arrayHoursBusy
-  let arrayHoursBusy: string[] = [];
-  appointments.map((item) =>(item.dateTime).includes(newAppointment.dateTime)? arrayHoursBusy.push(item.dateTime) : null );
-  
-  if(arrayHoursBusy.length > 0){
-    let aux;
-    console.log(arrayHoursBusy);
-    arrayHoursBusy.forEach(element => {
-      aux = element.split('T')
-      //removeItem(aux[1], hoursAvailable);
-      var index = hoursAvailable.indexOf(Number(aux[1]));
-        if (index !== -1) {
-          hoursAvailable.splice(index, 1);
+      if(event.target.value === ''){
+      setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime:''}))
+      }else{
+        let values = event.target.value.split(',');
+        
+        if(values[0] < 10) {values[0] = '0' + values[0]}
+        if(values[1] < 10) {values[1] = '0' + values[1]}
+        setDateTime(`${year}-${values[1]}-${values[0]}T`);//bo aquii
+        
+        auxxxxx = `${year}-${values[1]}-${values[0]}T`;
+        if(newAppointment.dateTime !== auxxxxx){
+          setSelectedHourFlag(true);
+        }
+        setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: auxxxxx}));
       }
-    });
+      setOcupadas(getBusyHours(appointments, newAppointment));
+      setSelectedDayFlag(false);//como selecionou horario, torna a flag false
+  }
+
+  let hoursAvailable = [7,8,9,10,11,12,13,14,15,16,17,18,19];
+  if(busyHours.length > 0){
+      let aux;
+      busyHours.forEach(element => {
+          console.log("ocupadas", element);
+          aux = element.split('T')
+          var index = hoursAvailable.indexOf(Number(aux[1]));
+            if (index !== -1) {
+              hoursAvailable.splice(index, 1);
+          }
+      });
   }
 
   const handleHourChange = (event:any) => {
-    let selectHour = event.target.value;
-    if(selectHour < 10 && selectHour !== ''){
-      selectHour = '0'+ selectHour
-    }
-    let oldDate = newAppointment.dateTime.split('T');
-    setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: oldDate[0]+'T' + selectHour}))
+      let selectedHour = event.target.value;
+      if(selectedHour < 10 && selectedHour !== ''){
+        selectedHour = '0'+ selectedHour
+      }
+      let oldDate = newAppointment.dateTime.split('T');
+      setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: oldDate[0]+'T' + selectedHour}))
+      setSelectedHourFlag(false);
   }
 
+  
   useEffect(()=>{console.log(newAppointment)},[newAppointment])
+  useEffect(()=>{console.log('ocupadas',ocupadas)},[ocupadas])
+  
+  //useEffect(()=>{console.log(newDateTime)},[newDateTime])
     return (
       <div>
         <MainContainer>
@@ -130,7 +206,7 @@ const Reserve: React.FC = () => {
 
                 </SectionBigger>
                 <Section name="day" required disabled={newAppointment.barberId === ''? true : false} onChange={handleDayChange} >
-                    <option value="">Selecione o dia</option>
+                    <option value="" selected = {selectedDayFlag}>Selecione o dia</option>
 
                     {days.map((d) =>
                       (<option key={d} value={[String(d),String(month)]} > 
@@ -144,16 +220,16 @@ const Reserve: React.FC = () => {
                       </option>)
                     )}
                 </Section>
-                <Section name="hour" required disabled={newAppointment.dateTime.endsWith('T') || endsWithNumber(newAppointment.dateTime) ? false : true} onChange={handleHourChange}>
-                    <option value="">Selecione o horário</option>
+                
+                <Section name="hour" required disabled={(newAppointment.barberId === '' || newAppointment.dateTime ==='')  ? true : false} onChange={handleHourChange}>
+                    <option value="" selected = {selectedHourFlag}>Selecione o horário</option>
                     {hoursAvailable.map((h) =>
                       <option key={h} value={String(h)}  > 
                         às {h} horas
                       </option>)
                     }
-                    
                 </Section>
-                <ReservaButton>
+                <ReservaButton >
                     <ButtonText>Concluir Reserva</ButtonText>
                 </ReservaButton>
             </SugestaoSection>
@@ -165,3 +241,4 @@ export default Reserve;
 
 //falta fazer caso a pessoa relesecione um barbeiro ou dia, o prox select retornar para selecione um horario
 //perguntar do removeItem
+//<Section name="hour" required disabled={newAppointment.dateTime.endsWith('T') || endsWithNumber(newAppointment.dateTime) ||  ? false : true} onChange={handleHourChange}>//

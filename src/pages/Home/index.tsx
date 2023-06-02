@@ -3,33 +3,25 @@ import { Reserves } from './types';
 import { ReserveLine } from '../../components/ReserveLine';
 import { MainContainer, ContentContainer, SugestaoSection, Aviso, ReservaButton } from './styles';
 import { FakeAppointments } from './mocks';
-
+import { api, token, id } from '../../services/api';
 const Home: React.FC = () => {
 
     const [reserves, setReserves] = useState< Reserves[] >([]);
-    const loadCustomers = useCallback(async () => {
-        const api = 'http://localhost:3000/'
-        const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwNDFkYzcyLWJhMmItNDlhNS04YjJiLTYxNDc1ZmRiMzQyNiIsImlhdCI6MTY4NDMzNTk0NywiZXhwIjoxNjg0NTE1OTQ3fQ.gXEP9OU7Ed-V-cNvev518XuMcA0Inxy11uMdmjLRaQw'
-        const id ="7c752db7-0461-47c3-a758-7f7500187708"
-        const headers = {
+    // manipulacao dentro defuncao só, alteracao de dados apenas nos states, consolar dentro do useEffect sempre que alterar
+    const loadReserves = useCallback(async () => {
+      const headers = {
           authorization: `Bearer ${token}`,
-        };
-        //flag: 0 barber and 1 customer
-        await fetch(`${api}appointments/${id}?flag=1`, {headers,})   
-                .then(response => response.json())
-                .then(data => setReserves(data));
-        },[]) 
+      };
+      //flag: 0 barber and 1 customer
+      await fetch(`${api}appointments/${id}?flag=1`, {headers,})   
+              .then(response => response.json())
+              .then(data => setReserves(data));
+    },[]) 
 
-        //useEffect(()=>{loadCustomers()},[loadCustomers])
-        //useEffect(()=>{console.log(reserves)},[reserves])
-        
-        // ordenar quando puxar do banco
-        // criar func q recebe reserves,
-        // verifica ( data > dateNow ) +/-
-        // vigenteFlag = 1;
-        //dps mapear ordenado já, do mais recente pro mais antigo
+    useEffect(()=>{loadReserves()},[loadReserves])
+    useEffect(()=>{console.log(reserves)},[reserves])
 
-        const testeDiv = [];
+    const testeDiv = []; // alterar p state
     return (
       <MainContainer>
         <ContentContainer>
@@ -43,8 +35,8 @@ const Home: React.FC = () => {
               </ReservaButton>
             </SugestaoSection>) : null }
             
-              {FakeAppointments.map(({ id, dateTime, customerId, barberId }) =>  (
-                  <ReserveLine
+              {reserves.map(({ id, dateTime, customerId, barberId }) =>  (
+                <ReserveLine
                   id={id}
                   dateTime={dateTime}
                   customerId={customerId}
@@ -52,6 +44,7 @@ const Home: React.FC = () => {
                   />
                 ))
               } 
+              
         </ContentContainer>
       </MainContainer>
     );
@@ -59,3 +52,14 @@ const Home: React.FC = () => {
 
 export default Home;
 
+// {reserves.forEach(element => {
+//   <ReserveLine
+//   id={element.id}
+//   dateTime={element.dateTime}
+//   customerId={element.customerId}
+//   barberId={element.barberId}
+//   status={statusAux}
+//   />
+// });
+
+// }

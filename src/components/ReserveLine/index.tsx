@@ -5,7 +5,7 @@ interface ReserveProps {
     id: string,
     dateTime: string,
     customerId: string,
-    barberId: string
+    barberId: string,
 };
 
 export const ReserveLine: React.ElementType<ReserveProps> = ({
@@ -22,7 +22,6 @@ export const ReserveLine: React.ElementType<ReserveProps> = ({
                 <Wrapper/>
                 <p> {dateTime}</p> 
                 <Wrapper/>
-                <p>Concluída</p>
                 
             </Dados>
         </Card>
