@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MainContainer, SugestaoSection, Section, ReservaButton, ButtonText, SectionBigger } from './styles';
 import { FakeAppointments, FakeBarbers } from './mocks';
-import { stringify } from 'querystring';
 
 interface Appointment{
   id: string,
@@ -211,4 +210,3 @@ const Reserve: React.FC = () => {
   }
 export default Reserve;
 
-//perguntar do removeItem
