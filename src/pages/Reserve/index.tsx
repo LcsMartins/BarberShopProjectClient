@@ -81,7 +81,7 @@ function getBusyHours(appointments : Appointment[], newAppointment: Appointment)
   if(newAppointment.dateTime !== ''){
       busyHours.pop();
       let aux = newAppointment.dateTime.split('T');
-      appointments.map((item) =>(item.dateTime).includes(aux[0])? busyHours.push(item.dateTime) : null );
+      appointments.map((item) =>( item.dateTime.includes(aux[0]) ) && (item.barberId === newAppointment.barberId ) ? busyHours.push(item.dateTime) : null);
   }
   return busyHours;
 }
@@ -160,6 +160,8 @@ const Reserve: React.FC = () => {
       setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: oldDate[0]+'T' + selectedHour}))
       setSelectedHourFlag(false);
   }
+
+  useEffect(()=>{console.log(appointments)},[appointments])
 
   useEffect(()=>{console.log(newAppointment)},[newAppointment])
     return (
