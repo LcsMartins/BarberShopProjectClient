@@ -81,7 +81,8 @@ function getBusyHours(appointments : Appointment[], newAppointment: Appointment)
   let busyHours = [''];
   if(newAppointment.dateTime !== ''){
       busyHours.pop();
-      appointments.map((item) =>(item.dateTime).includes(newAppointment.dateTime)? busyHours.push(item.dateTime) : null );
+      let aux = newAppointment.dateTime.split('T');
+      appointments.map((item) =>(item.dateTime).includes(aux[0])? busyHours.push(item.dateTime) : null );
   }
   return busyHours;
 }
@@ -91,7 +92,6 @@ function getAvailableHours(ocupadas : string[]){
     if(ocupadas.length > 1){
         let aux;
         ocupadas.forEach(element => {
-            console.log("ocupada:", element);
             aux = element.split('T')
             var index = hoursAvailable.indexOf((aux[1]));
               if (index !== -1) {
@@ -152,7 +152,6 @@ const Reserve: React.FC = () => {
       setSelectedDayFlag(false);//como selecionou horario, torna a flag false
   }
  
-  //falta adc aqui q caso a pessoa selecione o horario, os horarios ocupados continuem sem aparecer
   const handleHourChange = (event:any) => {
       let selectedHour = event.target.value;
       if(selectedHour < 10 && selectedHour !== ''){

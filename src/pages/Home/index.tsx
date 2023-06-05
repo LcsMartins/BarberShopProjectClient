@@ -4,10 +4,24 @@ import { ReserveLine } from '../../components/ReserveLine';
 import { MainContainer, ContentContainer, SugestaoSection, Aviso, ReservaButton } from './styles';
 import { FakeAppointments } from './mocks';
 import { api, token, id } from '../../services/api';
+
+interface Reserve{
+  id: string,
+  dateTime: string,
+  customerId: string,
+  barberId: string,
+}
+const initialAppointment = [{
+  id: '',
+  dateTime: '',
+  customerId:'' ,
+  barberId: '',
+}]
+
+
 const Home: React.FC = () => {
 
-    const [reserves, setReserves] = useState< Reserves[] >([]);
-    // manipulacao dentro defuncao só, alteracao de dados apenas nos states, consolar dentro do useEffect sempre que alterar
+    const [reserves, setReserves] = useState< Reserves[] >(initialAppointment);
     const loadReserves = useCallback(async () => {
       const headers = {
           authorization: `Bearer ${token}`,
