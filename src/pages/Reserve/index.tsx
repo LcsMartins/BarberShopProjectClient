@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { MainContainer, SugestaoSection, Section, ReservaButton, ButtonText, SectionBigger } from './styles';
-import { FakeAppointments, FakeBarbers } from './mocks';
+import { initialAppointments, initialBarbers } from './mocks';
 import { api, token, id } from '../../services/api';
 
 interface Appointment{
@@ -105,8 +105,25 @@ const shortMonths = ['janeiro','fevereiro','março','abril','maio','junho','julh
 
 const Reserve: React.FC = () => {
 
-  const [barbers, setBarbers] = useState(FakeBarbers);
-  //const [appointments, setAppointments] = useState(FakeAppointments);
+  const [barbers, setBarbers] = useState(initialBarbers);
+  const loadBarbers = useCallback(async () => {
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        };
+        await fetch(`${api}barber`, {...requestOptions,})   
+                .then(response => response.json())
+                .then(data => setBarbers(data));
+    
+},[]) 
+
+useEffect(()=>{loadBarbers()},[loadBarbers])
+useEffect(()=>{console.log(barbers)},[barbers])
+
 
   let [newDateTime, setDateTime] = useState(''); 
   useEffect(()=>{setDateTime(newDateTime)},[newDateTime]);
@@ -116,7 +133,7 @@ const Reserve: React.FC = () => {
   const [selectedDayFlag, setSelectedDayFlag] = useState(false);
   const [selectedHourFlag, setSelectedHourFlag] = useState(false);
 
-  const [appointmentsLoaded, setAppointmentsNew] = useState< Appointment[] >(FakeAppointments);
+  const [appointmentsLoaded, setAppointmentsNew] = useState< Appointment[] >(initialAppointments);
   const loadReserves = useCallback(async (barberId: string) => {
       if(barberId !==''){
           const requestOptions = {
@@ -205,9 +222,9 @@ const Reserve: React.FC = () => {
                 <SectionBigger name="barber" required onChange={handleBarberChange} >
                     <option value="">Selecione o profissional</option>
                   
-                    {barbers.map(({barberId}) =>
-                     (<option key={barberId} value={barberId}  > 
-                        {barberId}
+                    {barbers.map((barber) =>
+                     (<option key={barber.id} value={barber.id} > 
+                        {barber.name}
                      </option>)
                     )}
 

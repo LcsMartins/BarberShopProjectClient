@@ -1,38 +1,18 @@
-export const FakeAppointments =[
+export const initialAppointments =[
     {
-        id: '7bc5d584-4ecc-4e89-864e-19b349a2ae03',
-        dateTime: '2023-05-11T10',
-        customerId: 'Lucas',
-        barberId: 'Felipe',
-    },
-    {
-        id: '7bc5d584-4ecc-4e89-864e-19b349a2ae03',
-        dateTime: '2023-05-11T11',
-        customerId: 'Renan',
-        barberId: 'Felipe',
-    },
-    {
-        id: '7bc5d584-4ecc-4e89-864e-19b349a2ae03',
-        dateTime: '2023-05-10T10',
-        customerId: 'Lucas',
-        barberId: 'Romano',
-    },
-    {
-        id: '7bc5d584-4ecc-4e89-864e-19b349a2ae03',
-        dateTime: '2023-05-10T11',
-        customerId: 'Lucas',
-        barberId: 'Romano',
+        id: '',
+        dateTime: '',
+        customerId: '',
+        barberId: '',
     },
 ];
 
-export const FakeBarbers = [
-    {   
-        barberId: 'Will',
-    },
-    {   
-        barberId: '5aba49e4-4325-4610-9efc-0d3b47b27cc9',
-    },
-    {   
-        barberId: 'Romano',
-    },
+export const initialBarbers = [
+    {
+        id: "",
+        email: "",
+        password: "",
+        name: "",
+        contactNumber: ""
+      },
 ]
