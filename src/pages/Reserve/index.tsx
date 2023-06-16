@@ -132,6 +132,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
   const [newAppointment, setNewAppointment] = useState(initialAppointment);
   const [selectedDayFlag, setSelectedDayFlag] = useState(false);
   const [selectedHourFlag, setSelectedHourFlag] = useState(false);
+  const [userFeedback, setUserFeedback] = useState('');
 
   const [appointmentsLoaded, setAppointmentsNew] = useState< Appointment[] >(initialAppointments);
   const loadReserves = useCallback(async (barberId: string) => {
@@ -166,6 +167,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
       if(newAppointment.barberId !== event.target.value){
         setSelectedDayFlag(true);
         setSelectedHourFlag(true);
+        setUserFeedback('');
       }
       setNewAppointment((prevAppointments) => ({...prevAppointments, barberId: event.target.value, dateTime:''}))
   }
@@ -211,6 +213,9 @@ useEffect(()=>{console.log(barbers)},[barbers])
       };
       fetch(`${api}appointment`, {...requestOptions,})
           .then(response => console.log(response.json()))
+
+      //falta definir a mensagem bonitin aqui ja e renderizar ela msm, mais facil
+      setUserFeedback('aqqq');
   }
 
 
@@ -253,10 +258,12 @@ useEffect(()=>{console.log(barbers)},[barbers])
                       </option>)
                     }
                 </Section>
-                <ReservaButton >
+                <ReservaButton>
                     <ButtonText onClick={handleSubmit}>Concluir Reserva</ButtonText>
                 </ReservaButton>
+                
             </SugestaoSection>
+            {userFeedback !== '' ? <h3>Horário marcado no dia {newAppointment.dateTime}, com o barbeiro {newAppointment.barberId} com sucesso!</h3> : null }
         </MainContainer>
       </div>
     )
