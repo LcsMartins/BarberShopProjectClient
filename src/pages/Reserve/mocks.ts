@@ -30,7 +30,7 @@ export const FakeBarbers = [
         barberId: 'Will',
     },
     {   
-        barberId: 'Felipe',
+        barberId: '5aba49e4-4325-4610-9efc-0d3b47b27cc9',
     },
     {   
         barberId: 'Romano',

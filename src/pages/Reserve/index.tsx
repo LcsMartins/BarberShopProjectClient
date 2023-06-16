@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MainContainer, SugestaoSection, Section, ReservaButton, ButtonText, SectionBigger } from './styles';
 import { FakeAppointments, FakeBarbers } from './mocks';
+import { api, token, id } from '../../services/api';
 
 interface Appointment{
   id: string,
@@ -87,13 +88,13 @@ function getBusyHours(appointments : Appointment[], newAppointment: Appointment)
 }
 
 function getAvailableHours(ocupadas : string[]){
-    let hoursAvailable = ['7','8','9','10','11','12','13','14'];
-    if(ocupadas.length > 1){
+    let hoursAvailable = ['07','08','09','10','11','12','13','14'];
+    if(ocupadas.length >= 1){
         let aux;
         ocupadas.forEach(element => {
             aux = element.split('T')
             var index = hoursAvailable.indexOf((aux[1]));
-              if (index !== -1) {
+              if (index >= 0) {
                 hoursAvailable.splice(index, 1);
             }
         });
@@ -105,25 +106,45 @@ const shortMonths = ['janeiro','fevereiro','março','abril','maio','junho','julh
 const Reserve: React.FC = () => {
 
   const [barbers, setBarbers] = useState(FakeBarbers);
-  const [appointments, setAppointments] = useState(FakeAppointments);
+  //const [appointments, setAppointments] = useState(FakeAppointments);
 
   let [newDateTime, setDateTime] = useState(''); 
   useEffect(()=>{setDateTime(newDateTime)},[newDateTime]);
 
+  
   const [newAppointment, setNewAppointment] = useState(initialAppointment);
   const [selectedDayFlag, setSelectedDayFlag] = useState(false);
   const [selectedHourFlag, setSelectedHourFlag] = useState(false);
 
+  const [appointmentsLoaded, setAppointmentsNew] = useState< Appointment[] >(FakeAppointments);
+  const loadReserves = useCallback(async (barberId: string) => {
+      if(barberId !==''){
+          const requestOptions = {
+            method: 'GET',
+            headers: {
+              authorization: `Bearer ${token}`,
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          };
+          await fetch(`${api}appointments/${barberId}?flag=0`, {...requestOptions,})   
+                  .then(response => response.json())
+                  .then(data => setAppointmentsNew(data));
+      }
+  },[]) 
+
+  useEffect(()=>{loadReserves(newAppointment.barberId)},[loadReserves, newAppointment.barberId])
+  
   const [currentDate, setCurrentDate] = useState(emptyDate);
   useEffect(()=>{setCurrentDate(getCurrentDate(currentDate))},[]);
 
   const[ocupadas, setOcupadas] = useState(['']);
-  useEffect(()=>{setOcupadas(getBusyHours(appointments, newAppointment))},[appointments, newAppointment]);
+  useEffect(()=>{setOcupadas(getBusyHours(appointmentsLoaded, newAppointment))},[appointmentsLoaded, newAppointment]);
 
   const[disponiveis,setDisponiveis] = useState(['']);
   useEffect(()=>{setDisponiveis(getAvailableHours(ocupadas))},[ocupadas]);
   
-
+  
   const handleBarberChange = (event:any) => {
       if(newAppointment.barberId !== event.target.value){
         setSelectedDayFlag(true);
@@ -138,9 +159,6 @@ const Reserve: React.FC = () => {
       }else{
         let values = event.target.value.split(',');
         
-        if(values[0] < 10) {values[0] = '0' + values[0]}
-        if(values[1] < 10) {values[1] = '0' + values[1]}
-
         newDateTime = (`${currentDate.year}-${values[1]}-${values[0]}T`);
         
         if(newAppointment.dateTime !== newDateTime){
@@ -153,15 +171,31 @@ const Reserve: React.FC = () => {
  
   const handleHourChange = (event:any) => {
       let selectedHour = event.target.value;
-      if(selectedHour < 10 && selectedHour !== ''){
-        selectedHour = '0'+ selectedHour
-      }
+      
       let oldDate = newAppointment.dateTime.split('T');
       setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: oldDate[0]+'T' + selectedHour}))
+      setNewAppointment((prevAppointments) => ({...prevAppointments, customerId:id})) // id hardcoded
       setSelectedHourFlag(false);
   }
 
-  useEffect(()=>{console.log(appointments)},[appointments])
+  const handleSubmit= () => {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          dateTime: newAppointment.dateTime,
+          customerId: newAppointment.customerId,
+          barberId: '5aba49e4-4325-4610-9efc-0d3b47b27cc9',
+        })
+      };
+      fetch(`${api}appointment`, {...requestOptions,})
+          .then(response => console.log(response.json()))
+  }
+
 
   useEffect(()=>{console.log(newAppointment)},[newAppointment])
     return (
@@ -203,7 +237,7 @@ const Reserve: React.FC = () => {
                     }
                 </Section>
                 <ReservaButton >
-                    <ButtonText>Concluir Reserva</ButtonText>
+                    <ButtonText onClick={handleSubmit}>Concluir Reserva</ButtonText>
                 </ReservaButton>
             </SugestaoSection>
         </MainContainer>

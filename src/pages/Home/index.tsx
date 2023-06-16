@@ -66,14 +66,3 @@ const Home: React.FC = () => {
 
 export default Home;
 
-// {reserves.forEach(element => {
-//   <ReserveLine
-//   id={element.id}
-//   dateTime={element.dateTime}
-//   customerId={element.customerId}
-//   barberId={element.barberId}
-//   status={statusAux}
-//   />
-// });
-
-// }

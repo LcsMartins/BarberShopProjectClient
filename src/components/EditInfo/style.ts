@@ -31,9 +31,8 @@ export const ModalContainer = styled.div`
 export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  line-height: 1.8;
   color: #141414;
 
   button {
@@ -41,6 +40,9 @@ export const ModalContent = styled.div`
     background: #141414;
     color: #fff;
     border: none;
+  }
+  p{
+    color: red;
   }
 `;
 

@@ -19,10 +19,11 @@ interface User{
 interface EditInfoProps{
   modifiedUser: User,
   setModifiedUser: (value: User) => void,
-  propType?: string,
+  setSubmitted: (value: boolean) => void,
+  propType: string,
 }
 
-const EditInfo: React.FC <EditInfoProps> = ({modifiedUser, setModifiedUser, propType }) => {
+const EditInfo: React.FC <EditInfoProps> = ({modifiedUser, setModifiedUser, propType, setSubmitted}) => {
   const [showModal, setShowModal] = useState(false)
  
     const openModal = () => {
@@ -32,7 +33,7 @@ const EditInfo: React.FC <EditInfoProps> = ({modifiedUser, setModifiedUser, prop
   return(
     <>
       <EditButton onClick={openModal}>Alterar</EditButton>
-      <Modal showModal={showModal} setShowModal={setShowModal} modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={propType} ></Modal>    
+      <Modal showModal={showModal} setShowModal={setShowModal} modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={propType} setSubmitted={setSubmitted} ></Modal>    
     </>
 
   )

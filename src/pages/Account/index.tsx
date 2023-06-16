@@ -20,7 +20,7 @@ const initialUser={
 const Account: React.FC = () => {
     const [user, setUser] = useState< User >(initialUser);
     const [modifiedUser, setModifiedUser] = useState<User>(initialUser);
-
+    const [submitted, setSubmitted] = useState(false);
     const loadUser = useCallback(async () => {
       const headers = {
           authorization: `Bearer ${token}`,
@@ -34,9 +34,22 @@ const Account: React.FC = () => {
     },[]) 
 
     useEffect(()=>{loadUser()},[loadUser])
-//fazer a flag para dar o ok, usar via state, é isso
-//inicio de tudo q é state tem q ser na pagina, se precisar em componente vai de props
-// manipulacao valores input, validar , regex , se tiver alguma condicao faltante, mostrar
+    
+    //ajuda nisso
+  useEffect(()=>{if(submitted){
+    const requestOptions = {
+      method: 'PATCH',
+      headers: {
+        authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(modifiedUser)
+    };
+    fetch(`${api}customer/${id}`,{...requestOptions,} )
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+  }},[submitted, modifiedUser])
 
     return (
       <div>
@@ -50,7 +63,7 @@ const Account: React.FC = () => {
                           {user.name}
                       </SecondColumn>
                   </ContentContainer>
-                  <EditInfo modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={'name'} ></EditInfo>
+                  <EditInfo modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={'name'} setSubmitted={setSubmitted} ></EditInfo>
               </Card>
               
               <Card>
@@ -62,7 +75,7 @@ const Account: React.FC = () => {
                          {user.email}
                       </SecondColumn>
                   </ContentContainer>
-                  <EditInfo modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={'email'}></EditInfo>
+                  <EditInfo modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={'email'} setSubmitted={setSubmitted} ></EditInfo>
               </Card>
 
               <Card>
@@ -74,7 +87,7 @@ const Account: React.FC = () => {
                         {user.contactNumber}
                       </SecondColumn>
                   </ContentContainer>
-                  <EditInfo modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={'contactNumber'}></EditInfo>
+                  <EditInfo modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={'contactNumber'} setSubmitted={setSubmitted} ></EditInfo>
               </Card>
               
         </MainContainer>
