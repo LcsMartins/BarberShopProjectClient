@@ -101,7 +101,14 @@ function getAvailableHours(ocupadas : string[]){
     }
     return hoursAvailable;
 }
+
 const shortMonths = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro','janeiro'];
+
+function printDay(date: string){
+  const aux = date.split('-');
+  date = aux[2][0] + aux[2][1]  + ' de ' + shortMonths[Number(aux[1])] +' de ' + aux[0];
+  return date
+}
 
 const Reserve: React.FC = () => {
 
@@ -186,6 +193,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
         setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: newDateTime}));
       }
       setSelectedDayFlag(false);//como selecionou horario, torna a flag false
+      setUserFeedback('');
   }
  
   const handleHourChange = (event:any) => {
@@ -195,6 +203,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
       setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: oldDate[0]+'T' + selectedHour}))
       setNewAppointment((prevAppointments) => ({...prevAppointments, customerId:id})) // id hardcoded
       setSelectedHourFlag(false);
+      setUserFeedback('');
   }
 
   const handleSubmit= () => {
@@ -215,7 +224,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
           .then(response => console.log(response.json()))
 
       //falta definir a mensagem bonitin aqui ja e renderizar ela msm, mais facil
-      setUserFeedback('aqqq');
+      setUserFeedback('ok');
   }
 
 
@@ -263,7 +272,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
                 </ReservaButton>
                 
             </SugestaoSection>
-            {userFeedback !== '' ? <h3>Horário marcado no dia {newAppointment.dateTime}, com o barbeiro {newAppointment.barberId} com sucesso!</h3> : null }
+            {userFeedback !== '' ? <h3>Horário marcado no dia {printDay(newAppointment.dateTime)}, às {newAppointment.dateTime.split('T')[1]} horas, com o barbeiro {newAppointment.barberId} com sucesso!</h3> : null }
         </MainContainer>
       </div>
     )
