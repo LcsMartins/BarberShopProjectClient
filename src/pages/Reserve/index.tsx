@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { MainContainer, SugestaoSection, Section, ReservaButton, ButtonText, SectionBigger } from './styles';
 import { initialAppointments, initialBarbers } from './mocks';
 import { api, token, id } from '../../services/api';
+import shortMonths from '../../utils/months';
+import printDay from '../../utils/printDay';
 
 interface Appointment{
   id: string,
@@ -102,13 +104,6 @@ function getAvailableHours(ocupadas : string[]){
     return hoursAvailable;
 }
 
-const shortMonths = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro','janeiro'];
-
-function printDay(date: string){
-  const aux = date.split('-');
-  date = aux[2][0] + aux[2][1]  + ' de ' + shortMonths[Number(aux[1])] +' de ' + aux[0];
-  return date
-}
 
 const Reserve: React.FC = () => {
 
@@ -127,10 +122,7 @@ const Reserve: React.FC = () => {
                 .then(data => setBarbers(data));
     
 },[]) 
-
-useEffect(()=>{loadBarbers()},[loadBarbers])
-useEffect(()=>{console.log(barbers)},[barbers])
-
+  useEffect(()=>{loadBarbers()},[loadBarbers])
 
   let [newDateTime, setDateTime] = useState(''); 
   useEffect(()=>{setDateTime(newDateTime)},[newDateTime]);
@@ -140,6 +132,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
   const [selectedDayFlag, setSelectedDayFlag] = useState(false);
   const [selectedHourFlag, setSelectedHourFlag] = useState(false);
   const [userFeedback, setUserFeedback] = useState('');
+  const [incompleteFlag, setIncompleteFlag] = useState(true);
 
   const [appointmentsLoaded, setAppointmentsNew] = useState< Appointment[] >(initialAppointments);
   const loadReserves = useCallback(async (barberId: string) => {
@@ -157,7 +150,6 @@ useEffect(()=>{console.log(barbers)},[barbers])
                   .then(data => setAppointmentsNew(data));
       }
   },[]) 
-
   useEffect(()=>{loadReserves(newAppointment.barberId)},[loadReserves, newAppointment.barberId])
   
   const [currentDate, setCurrentDate] = useState(emptyDate);
@@ -174,8 +166,8 @@ useEffect(()=>{console.log(barbers)},[barbers])
       if(newAppointment.barberId !== event.target.value){
         setSelectedDayFlag(true);
         setSelectedHourFlag(true);
-        setUserFeedback('');
       }
+      setUserFeedback('');
       setNewAppointment((prevAppointments) => ({...prevAppointments, barberId: event.target.value, dateTime:''}))
   }
 
@@ -203,6 +195,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
       setNewAppointment((prevAppointments) => ({...prevAppointments, dateTime: oldDate[0]+'T' + selectedHour}))
       setNewAppointment((prevAppointments) => ({...prevAppointments, customerId:id})) // id hardcoded
       setSelectedHourFlag(false);
+      setIncompleteFlag(false);
       setUserFeedback('');
   }
 
@@ -223,18 +216,17 @@ useEffect(()=>{console.log(barbers)},[barbers])
       fetch(`${api}appointment`, {...requestOptions,})
           .then(response => console.log(response.json()))
 
-      //falta definir a mensagem bonitin aqui ja e renderizar ela msm, mais facil
       setUserFeedback('ok');
   }
 
 
-  useEffect(()=>{console.log(newAppointment)},[newAppointment])
+  useEffect(()=>{console.log(newAppointment, selectedHourFlag )},[newAppointment, selectedHourFlag])
     return (
       <div>
         <MainContainer>
            <SugestaoSection>
                 <SectionBigger name="barber" required onChange={handleBarberChange} >
-                    <option value="">Selecione o profissional</option>
+                    <option value="" disabled={true}>Selecione o profissional</option>
                   
                     {barbers.map((barber) =>
                      (<option key={barber.id} value={barber.id} > 
@@ -244,7 +236,7 @@ useEffect(()=>{console.log(barbers)},[barbers])
 
                 </SectionBigger>
                 <Section name="day" required disabled={newAppointment.barberId === ''? true : false} onChange={handleDayChange} >
-                    <option value="" selected = {selectedDayFlag}>Selecione o dia</option>
+                    <option value="" selected = {selectedDayFlag} disabled={true} >Selecione o dia</option>
 
                     {currentDate.numberDaysThisMonth.map((d) =>
                       (<option key={d} value={[String(d),String(currentDate.month)]} > 
@@ -260,15 +252,15 @@ useEffect(()=>{console.log(barbers)},[barbers])
                 </Section>
                 
                 <Section name="hour" required disabled={(newAppointment.barberId === '' || newAppointment.dateTime ==='')  ? true : false} onChange={handleHourChange}>
-                    <option value="" selected = {selectedHourFlag}>Selecione o horário</option>
+                    <option value="" selected = {selectedHourFlag} disabled={true}>Selecione o horário</option>
                     {disponiveis.map((h) =>
                       <option key={h} value={String(h)}  > 
                         às {h} horas
                       </option>)
                     }
                 </Section>
-                <ReservaButton>
-                    <ButtonText onClick={handleSubmit}>Concluir Reserva</ButtonText>
+                <ReservaButton onClick={handleSubmit} disabled={incompleteFlag}>
+                    <ButtonText >Concluir Reserva</ButtonText>
                 </ReservaButton>
                 
             </SugestaoSection>
@@ -278,4 +270,3 @@ useEffect(()=>{console.log(barbers)},[barbers])
     )
   }
 export default Reserve;
-

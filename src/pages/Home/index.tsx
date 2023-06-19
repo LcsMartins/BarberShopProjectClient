@@ -2,15 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Reserves } from './types';
 import { ReserveLine } from '../../components/ReserveLine';
 import { MainContainer, ContentContainer, SugestaoSection, Aviso, ReservaButton } from './styles';
-import { FakeAppointments } from './mocks';
 import { api, token, id } from '../../services/api';
 
-interface Reserve{
-  id: string,
-  dateTime: string,
-  customerId: string,
-  barberId: string,
-}
 const initialAppointment = [{
   id: '',
   dateTime: '',

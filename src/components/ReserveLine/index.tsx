@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Dados, Image, Wrapper } from './style';
 import Will from '../../assets/images/will.jpg'
+import printDay from '../../utils/printDay';
+
 interface ReserveProps {
     id: string,
     dateTime: string,
@@ -14,15 +16,18 @@ export const ReserveLine: React.ElementType<ReserveProps> = ({
     customerId,
     barberId,
 }) => (
+    <>
         <Card>
             <Image src= {Will}>
             </Image>
             <Dados>
                 <p>{barberId}</p>
+
                 <Wrapper/>
-                <p> {dateTime}</p> 
+                <p> {printDay(dateTime || '0000-0-00T00')}, às {dateTime.split('T')[1]} horas</p> 
                 <Wrapper/>
                 
             </Dados>
         </Card>
+    </>
 );
