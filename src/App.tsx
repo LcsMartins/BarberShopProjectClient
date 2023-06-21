@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components';
 import theme from './assets/theme';
 import GlobalStyle from './assets/global';
 import { UserProvider } from './utils/useUser';
-import Account from './pages/Account';
 import { BrowserRouter } from "react-router-dom";
 import PagesRoutes from './routes/index';
 
@@ -16,7 +15,6 @@ const App: React.FC = () => {
       <BrowserRouter>
           <ThemeProvider theme={theme}>
             <UserProvider>
-              <Nav/>
               <PagesRoutes />
             <GlobalStyle/>  
             </UserProvider>
