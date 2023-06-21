@@ -31,65 +31,13 @@ export const Menu = styled.div`
     gap:10px;
     margin-right: 15px;
 `
-export const MenuButton = styled.button`
+export const MenuButton = styled.a`
     border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
     font-weight: 700;
-`
-//usar flex wrap nos cards de reservas
-export const SecondSection = styled.div`
-    gap: 20px;
-    text-align: left;
-    width: 70%;
-    height: 40vh;
-    font-size: 1.25em;
-    margin-top:1em;
-`  
-// estudar padding,
-export const Link = styled.a`
-    margin-right: 1.25em;
-    text-decoration: none;
-    cursor: pointer;
-    color: ${({theme})=>theme.colors.mainWhite};
-    font-size: 20x;
-    width: 70%;
-    &:hover{
-        background-color: ${({theme}) => theme.colors.thirdBlue};
-        border-radius: 10px;
-        padding: 10px
-    }
-`
-export const IndicadorPagina = styled.a`
-    margin-right: 1.25em;
-    text-decoration: none;
-    cursor: pointer;
-    color: ${({theme})=>theme.colors.mainWhite};
-    font-size: 20x;
-    border: 2px solid white;
-    border-radius: 10px;
-    padding: 10px;
-
-    background-color:${({theme}) => theme.colors.secondBlue};
-`
-
-export const ThirdSection = styled.div`
-    text-align: left;
-    width: 70%;
-    color: ${({theme})=>theme.colors.mainWhite};
-
-    p{
-        font-size: 1.2em;
-    }
-`
-
-export const BemVindo = styled.a`
-    font-weight: 750;
-    font-size: 2em;
-`
-
-export const Wrapper = styled.span`
-    height: 1px;
-    width: 80%;
     background-color: ${({theme})=>theme.colors.mainWhite};
+    color: ${({theme})=>theme.colors.mainBlue};
+    text-decoration: none;
+    cursor: pointer;
 `

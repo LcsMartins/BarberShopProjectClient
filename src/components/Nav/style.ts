@@ -31,11 +31,15 @@ export const Menu = styled.div`
     gap:10px;
     margin-right: 15px;
 `
-export const MenuButton = styled.button`
+export const MenuButton = styled.a`
     border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
     font-weight: 700;
+    background-color: ${({theme})=>theme.colors.mainWhite};
+    color: ${({theme})=>theme.colors.mainBlue};
+    text-decoration: none;
+    cursor: pointer;
 `
 //usar flex wrap nos cards de reservas
 export const SecondSection = styled.div`

@@ -30,10 +30,14 @@ export const Aviso = styled.a`
     font-size: 1em;
     margin-left: 15px;
 `
-export const ReservaButton = styled.button`
-    align-items: center;
-    height: 110%;
-    width: 29%;
-    font-size: 1em;
-    background-color: ${({theme})=>theme.colors.skyBlue}
+
+export const ReserveButton = styled.a`
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 500;
+    background-color: ${({theme})=>theme.colors.mainBlue};
+    color: ${({theme})=>theme.colors.mainWhite};
+    text-decoration: none;
+    cursor: pointer;
 `

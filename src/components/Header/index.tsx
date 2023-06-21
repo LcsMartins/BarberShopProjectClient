@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { AppNavigation, Link, SecondSection, FirstSection, Title, Menu, MenuButton, ThirdSection, BemVindo, IndicadorPagina } from './style';
+import { AppNavigation,   FirstSection, Title, Menu, MenuButton } from './style';
 import { useUser } from '../../utils/useUser';
 const Nav = () => {
   const [url, setUrl] = useState(window.location.pathname);
@@ -21,7 +21,7 @@ const Nav = () => {
             <FirstSection>
                 <Title href="/home" >Barbearia.App</Title>
                 <Menu>
-                { url === '/login' ? (<MenuButton >Registrar</MenuButton>) : (<MenuButton >Logar</MenuButton>)}
+                { url === '/login' ? (<MenuButton href="/register">Registrar</MenuButton>) : (<MenuButton href="/login">Logar</MenuButton>)}
                 </Menu>
             </FirstSection>
         </AppNavigation>

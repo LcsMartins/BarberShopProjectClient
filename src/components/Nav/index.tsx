@@ -21,8 +21,8 @@ const Nav = () => {
             <FirstSection>
                 <Title href="/home" >Barbearia.App</Title>
                 <Menu>
-                  <MenuButton >Registrar</MenuButton>
-                  <MenuButton >Logar</MenuButton>
+                  <MenuButton href="/register">Registrar</MenuButton>
+                  <MenuButton href="/login">Logar</MenuButton>
                 </Menu>
             </FirstSection>
 

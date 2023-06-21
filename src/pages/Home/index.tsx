@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Reserves } from './types';
 import { ReserveLine } from '../../components/ReserveLine';
-import { MainContainer, ContentContainer, SugestaoSection, Aviso, ReservaButton } from './styles';
+import { MainContainer, ContentContainer, SugestaoSection, Aviso, ReserveButton } from './styles';
 import { api, token, id } from '../../services/api';
 
 const initialAppointment = [{
@@ -37,9 +37,9 @@ const Home: React.FC = () => {
               <Aviso>
                 Não há nenhuma reserva vigente, gostaria de reservar um horário?
               </Aviso>
-              <ReservaButton>
-                Sim, reservar agora
-              </ReservaButton>
+              <ReserveButton href="/reserve">
+                Sim, quero reservar um horário
+              </ReserveButton>
             </SugestaoSection>) : null }
             
               {reserves.map(({ id, dateTime, customerId, barberId }) =>  (
