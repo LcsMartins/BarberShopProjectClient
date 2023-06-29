@@ -35,14 +35,14 @@ const Register: React.FC = () => {
             <MyH4>Telefone:</MyH4>
             <Input
               type="text"
-              name="email"
+              name="phone"
               onChange={handleChange}
             />
 
             <MyH4>Email: </MyH4>
             <Input
               type="text"
-              name="password"
+              name="email"
               onChange={handleChange}
             />
 

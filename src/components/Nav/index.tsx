@@ -8,9 +8,9 @@ const Nav = () => {
     setUrl(window.location.pathname);
   },[]);
 
-  useEffect(() => {
-    console.log(url);
-  },[url]);
+  // useEffect(() => {
+  //   console.log(url);
+  // },[url]);
   
   //funcao devolve user e setUser, por isso precisa desestrutrar
   // para logar usa o setUser, por meio da desestruturacao msm

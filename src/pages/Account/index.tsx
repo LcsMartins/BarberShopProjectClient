@@ -3,6 +3,7 @@ import { MainContainer, ContentContainer, Card, FirstColumn, SecondColumn, EditL
 import { api, token, id } from '../../services/api';
 import EditInfo from '../../components/EditInfo';
 
+
 interface User{
   id: string,
   email: string,
@@ -90,6 +91,7 @@ const Account: React.FC = () => {
                   <EditInfo modifiedUser={modifiedUser} setModifiedUser={setModifiedUser} propType={'contactNumber'} setSubmitted={setSubmitted} ></EditInfo>
               </Card>
               
+
         </MainContainer>
 
       </div>

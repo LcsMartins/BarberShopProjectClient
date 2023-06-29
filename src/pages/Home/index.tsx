@@ -3,6 +3,7 @@ import { Reserves } from './types';
 import { ReserveLine } from '../../components/ReserveLine';
 import { MainContainer, ContentContainer, SugestaoSection, Aviso, ReserveButton } from './styles';
 import { api, token, id } from '../../services/api';
+import { useReservesActions } from '../../redux/store/reserve/reserveSlice';
 
 const initialAppointment = [{
   id: '',
@@ -26,7 +27,10 @@ const Home: React.FC = () => {
     },[]) 
 
     useEffect(()=>{loadReserves()},[loadReserves])
-    useEffect(()=>{console.log(reserves)},[reserves])
+    //useEffect(()=>{console.log(reserves)},[reserves])
+
+    const {getReserves, clearReserves} = useReservesActions()
+    useEffect(()=>{console.log("home getReserv ",getReserves())}, [])
 
     const testeDiv = []; // alterar p state
     return (

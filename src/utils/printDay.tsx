@@ -1,7 +1,6 @@
 import shortMonths from "./months";
 
 function printDay(dateReceived: string){
-    console.log(dateReceived);
     const aux = dateReceived.split('-');
     let date =''
     if(aux[2][1]==='T' ){
