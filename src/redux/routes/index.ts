@@ -1,7 +1,8 @@
 import { Reserves } from '../../pages/Home/types';
-import { api, token, id } from '../../services/api';
+import { id } from '../../services/api';
 import { CancelablePromise } from 'cancelable-promise';
-
+import { getAsyncRequest } from '../sliceUtils';
+import { ApiResponse } from '../sliceUtils';
 
 export type ApiCall<
 
@@ -11,19 +12,10 @@ export type ApiCall<
 
 > = () => K;
 
+export const getReserves: ()=> CancelablePromise<ApiResponse<Reserves[] | undefined>> = ()=> {
+  console.log(`entrou no getReserves das rotas`);  
+  return getAsyncRequest<Reserves[]>(`appointments/${id}?flag=1`)
 
-export const  getReserves: ApiCall<Reserves[], ()=>CancelablePromise<Reserves[]>> = ()=> {
-        const headers = {
-            authorization: `Bearer ${token}`,
-        };
-        //flag: 0 barber and 1 customer
-        const response =  fetch(`${api}appointments/${id}?flag=1`, {headers,})   
-               .then(response => response.json())
-
-
-        console.log("respo: ", response);
-
-        return response
 }
 
 

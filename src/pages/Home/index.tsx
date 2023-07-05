@@ -30,7 +30,7 @@ const Home: React.FC = () => {
     //useEffect(()=>{console.log(reserves)},[reserves])
 
     const {getReserves, clearReserves} = useReservesActions()
-    useEffect(()=>{console.log("home getReserv ",getReserves())}, [])
+    useEffect(()=>{getReserves()}, [getReserves])
 
     const testeDiv = []; // alterar p state
     return (
