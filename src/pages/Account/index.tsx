@@ -24,7 +24,7 @@ const initialUser = {
   contactNumber: "",
 };
 
-function maskNumber(number: string) {
+export function maskNumber(number: string) {
   return `(${number.slice(0, 2)}) ${number.slice(2, 6)}-${number.slice(6)}`;
 }
 

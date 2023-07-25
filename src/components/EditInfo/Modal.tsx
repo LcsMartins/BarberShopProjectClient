@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
-import { checkValues } from "./regex";
+import { checkValues } from "../../utils/regex";
+import { maskNumber } from "../../pages/Account";
 
 import {
   Background,
@@ -44,7 +45,7 @@ function getInfoViaProps(propType: string, modifiedUser: User) {
   if (propType === "name") {
     return modifiedUser.name;
   } else if (propType === "contactNumber") {
-    return modifiedUser.contactNumber;
+    return maskNumber(modifiedUser.contactNumber);
   } else {
     return modifiedUser.email;
   }
@@ -73,18 +74,15 @@ export const Modal: React.FC<ModalProps> = ({
     setModifiedUser({ ...modifiedUser, [propType]: e.currentTarget.value });
     setSubmitted(false);
     const match = checkValues(propType, e.target.value);
-
     switch (propType) {
-      case "nome":
-        if (!match) {
-          setErrorText("O campo deve conter apenas letras");
+      case "name":
+        if (match) {
+          setErrorText(
+            "O campo deve conter apenas letras, sem espaço após o último nome"
+          );
         } else {
           setErrorText("");
         }
-        break;
-
-      case "name":
-        setErrorText(match);
         break;
 
       case "contactNumber":

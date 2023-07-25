@@ -1,57 +1,97 @@
-import React from 'react';
-import { useState } from 'react';
-import { Button, Form, Input, MyH4 } from '../Register/style';
+import React from "react";
+import { useState } from "react";
+import { Button, Form, Input, MyH4, MyP } from "../Register/style";
+import { checkValues } from "../../utils/regex";
 
 const Register: React.FC = () => {
-    const [dados, setDados] = useState({
-      email: "",
-      password: ""
-    });
-    const handleSubmit = (e:any) => {
-      e.preventDefault();
-      console.log(dados);
-    };
-  
-    const handleChange = (e:any) => {
-      e.preventDefault();
-      const { name, value } = e.target;
-      setDados(Object.assign(dados, { [name]: value }));
-    };
-  
-    return (
-      <>
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+  };
 
-          <Form onSubmit={handleSubmit}>
-            <h2>Faça seu cadastro</h2>
+  const [isEmpty, setIsEmpty] = useState(true);
+  const [errorText, setErrorText] = useState(" ");
+  const [errorTexts, setErrorTexts] = useState({
+    name: "",
+    contactNumber: "",
+    email: "",
+  });
 
-            <MyH4>Nome: </MyH4>
-            <Input
-              type="text"
-              name="nome"
-              onChange={handleChange}
-            />
+  const handleChange = (e: any) => {
+    e.currentTarget.value === "" ? setIsEmpty(true) : setIsEmpty(false);
 
-            
-            <MyH4>Telefone:</MyH4>
-            <Input
-              type="text"
-              name="phone"
-              onChange={handleChange}
-            />
+    const match = checkValues(e.currentTarget.name, e.target.value);
 
-            <MyH4>Email: </MyH4>
-            <Input
-              type="text"
-              name="email"
-              onChange={handleChange}
-            />
+    switch (e.currentTarget.name) {
+      case "name":
+        if (match) {
+          setErrorTexts({
+            ...errorTexts,
+            name: "O campo deve conter apenas letras, um espaço entre palavras e não conter espaços após o último nome",
+          });
+        } else {
+          setErrorTexts({
+            ...errorTexts,
+            name: "",
+          });
+        }
+        break;
 
-            <p></p>
-            <Button>Prosseguir</Button>
-          </Form>
-      </>
-    );
-  }
+      case "contactNumber":
+        if (match) {
+          setErrorTexts({
+            ...errorTexts,
+            contactNumber: "O campo deve conter entre 9 e 10 números",
+          });
+        } else {
+          setErrorText("");
+          setErrorTexts({
+            ...errorTexts,
+            contactNumber: "",
+          });
+        }
+        break;
+
+      case "email":
+        setErrorTexts({
+          ...errorTexts,
+          email: match,
+        });
+        break;
+    }
+  };
+
+  return (
+    <>
+      <Form onSubmit={handleSubmit}>
+        <h2>Faça seu cadastro</h2>
+
+        <MyH4>Nome: </MyH4>
+        <Input type="text" name="name" onChange={handleChange} />
+        {errorTexts.name !== "" ? <MyP>{errorTexts.name}</MyP> : <></>}
+
+        <MyH4>Telefone:</MyH4>
+        <Input type="text" name="contactNumber" onChange={handleChange} />
+        {errorTexts.contactNumber !== "" ? (
+          <MyP>{errorTexts.contactNumber}</MyP>
+        ) : (
+          <></>
+        )}
+
+        <MyH4>Email: </MyH4>
+        <Input type="text" name="email" onChange={handleChange} />
+        {errorTexts.email !== "" ? <MyP>{errorTexts.email}</MyP> : <></>}
+
+        <p></p>
+        <Button
+          onClick={handleSubmit}
+          disabled={!(errorText === "") || isEmpty ? true : false}
+          type="submit"
+        >
+          Prosseguir
+        </Button>
+      </Form>
+    </>
+  );
+};
 
 export default Register;
-

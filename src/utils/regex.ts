@@ -1,11 +1,6 @@
-export const regExpTypes = [
-  { type: "password", regExp: /^[a-zA-Z\s]+[a-zA-Z]$/ },
+const regExpTypes = [
+  { type: "name", regExp: /([[a-zA-Z]*\s)*[a-zA-Z]$/ },
   { type: "contactNumber", regExp: /^[\d]{9,10}$/ },
-  {
-    type: "email",
-    regExp:
-      /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]{3,n}+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*/,
-  },
 ];
 
 const passwordTypes = {
@@ -23,7 +18,7 @@ const emailTypes = {
 };
 
 export const checkValues = (type: string, value: string) => {
-  if (type === `name`) {
+  if (type === `password`) {
     if (!passwordTypes.upperCase.test(value))
       return `É necessário no mínimo uma letra maiúscula`;
     if (!passwordTypes.lowerCase.test(value))
@@ -36,14 +31,18 @@ export const checkValues = (type: string, value: string) => {
       return `É necessário no mínimo 10 caracteres `;
     else return ``;
   }
+
   if (type === `email`) {
     if (!emailTypes.beforeAt.test(value))
       return `É necessário ter entre 3 e 15 caracteres antes do @`;
+
     if (!emailTypes.At.test(value)) return `É necessário ter @`;
+
     if (!emailTypes.afterAt.test(value))
       return `É necessário ter entre 4 e 15 caracteres depois do @, incluindo .`;
     else return ``;
   }
+
   const regExpType = regExpTypes.find((item) => item.type === type);
   const ok = regExpType?.regExp.test(value);
   let match = `not ok`;
