@@ -1,29 +1,89 @@
 import React from "react";
 
-import {
-    Routes,
-    Route,
-  } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Account from "../pages/Account";
 import Reserve from "../pages/Reserve";
-import Login from "../pages/Login"
-import Register from "../pages/Register"
-import RegisterPass from "../pages/RegisterPassword"
-import Nav from "../components/Nav"
-import Header from "../components/Header"
-
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import RegisterPassword from "../pages/RegisterPassword";
+import Nav from "../components/Nav";
+import Header from "../components/Header";
+import PrivateRoute from "./PrivateRoutes";
+import PrivateRouteRegister from "./PrivateRouteRegister copy";
 
 const PagesRoutes: React.FC = () => (
-    <Routes>
-        <Route path=""           element={ <> <Nav/> <Home/> </>} />
-        <Route path="/home"      element={ <> <Nav/> <Home/> </>} />
-        <Route path="/reserve"   element={ <> <Nav/> <Reserve/> </>} />
-        <Route path="/account"   element={ <> <Nav/> <Account/> </>} />
-        <Route path="/login"     element={ <> <Header/> <Login/> </>} />
-        <Route path="/register"     element={ <> <Header/> <Register/> </>} />
-        <Route path="/register/pass"     element={ <> <Header/> <RegisterPass/> </>} />
-    </Routes>
+  <Routes>
+    <Route
+      element={
+        <PrivateRoute>
+          <Header />
+          <Login />
+        </PrivateRoute>
+      }
+      path="/login"
+    />
+
+    <Route
+      element={
+        <PrivateRoute>
+          <Header />
+          <Register />
+        </PrivateRoute>
+      }
+      path="/register"
+    />
+
+    <Route
+      element={
+        <PrivateRouteRegister>
+          <Header />
+          <RegisterPassword />
+        </PrivateRouteRegister>
+      }
+      path="/register-password"
+    />
+
+    <Route
+      element={
+        <PrivateRoute>
+          <Nav />
+          <Home />
+        </PrivateRoute>
+      }
+      path="/home"
+    />
+
+    <Route
+      element={
+        <PrivateRoute>
+          <Nav />
+          <Home />
+        </PrivateRoute>
+      }
+      path="/"
+    />
+
+    <Route
+      element={
+        <PrivateRoute>
+          <Nav />
+          <Account />
+        </PrivateRoute>
+      }
+      path="/account"
+    />
+
+    <Route
+      element={
+        <PrivateRoute>
+          <Nav />
+          <Reserve />
+        </PrivateRoute>
+      }
+      path="/reserve"
+    />
+  </Routes>
 );
 
 export default PagesRoutes;

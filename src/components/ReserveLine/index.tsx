@@ -10,7 +10,7 @@ interface ReserveProps {
   barberId: string;
 }
 
-export const ReserveLine: React.ElementType<ReserveProps> = ({
+export const ReserveLine: React.FC<ReserveProps> = ({
   id,
   dateTime,
   customerId,

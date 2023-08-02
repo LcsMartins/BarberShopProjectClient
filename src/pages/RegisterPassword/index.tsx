@@ -1,49 +1,92 @@
-import React from 'react';
-import { useState } from 'react';
-import { Button, Form, Input, MyH4 } from '../Login/style';
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, MyH4, MyP } from "../RegisterPassword/style";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import { checkValues } from "../../utils/regex";
+import { useParams } from "react-router-dom";
 
-const Login: React.FC = () => {
-    const [dados, setDados] = useState({
-      email: "",
-      password: ""
-    });
-    const handleSubmit = (e:any) => {
-      e.preventDefault();
-      console.log(dados);
-    };
-  
-    const handleChange = (e:any) => {
-      e.preventDefault();
-      const { name, value } = e.target;
-      setDados(Object.assign(dados, { [name]: value }));
-    };
-  
-    return (
-      <>
+const RegisterPassword: React.FC = () => {
+  const navigate = useNavigate();
+  const [errorText, setErrorText] = useState(" ");
 
-          <Form onSubmit={handleSubmit}>
-            <h2>Crie a senha desejada</h2>
+  const user: string = Cookies.get("@app-barber:data") as string;
+  let userObj = JSON.parse(user);
 
-            <MyH4>Senha: </MyH4>
-            <Input
-              type="text"
-              name="password"
-              onChange={handleChange}
-            />
+  const [passwords, setPasswords] = useState({
+    firstPassword: "",
+    secondPassword: "",
+  });
 
-            <MyH4>Confirmar senha: </MyH4>
-            <Input
-              type="text"
-              name="password"
-              onChange={handleChange}
-            />
+  const handleSubmit = (e: any) => {
+    navigate("/Login");
+    userObj["password"] = passwords.firstPassword;
+    console.log(userObj);
+  };
 
-            <p></p>
-            <Button>Confirmar</Button>
-          </Form>
-      </>
-    );
-  }
+  const handleFirstChange = (e: any) => {
+    const match = checkValues("password", e.target.value);
 
-export default Login;
+    setErrorText(match);
+    if (match === "") {
+      setPasswords({ ...passwords, firstPassword: e.target.value });
+    }
+  };
+  const handleSecondChange = (e: any) => {
+    const match = checkValues("password", e.target.value);
 
+    setErrorText(match);
+    if (match === "") {
+      setPasswords({ ...passwords, secondPassword: e.target.value });
+    }
+  };
+
+  // useEffect(() => {
+  //   return () => {
+  //     Cookies.remove("@app-barber:data");
+  //   };
+  // });
+  useEffect(
+    () => () => {
+      //Cookies.remove("@app-barber:data");
+      console.log("asdas");
+    },
+
+    []
+  );
+  return (
+    <>
+      <Form onSubmit={handleSubmit}>
+        <h2>Crie a senha desejada</h2>
+
+        <MyH4>Senha: </MyH4>
+        <Input type="text" name="firstPassword" onChange={handleFirstChange} />
+        <MyH4>Confirmar senha: </MyH4>
+        <Input
+          type="text"
+          name="secondPassword"
+          onChange={handleSecondChange}
+        />
+        {errorText !== "" ? <MyP>{errorText}</MyP> : <></>}
+        {passwords.firstPassword !== passwords.secondPassword ? (
+          <MyP>As senhas devem ser iguais</MyP>
+        ) : (
+          <></>
+        )}
+        <Button
+          onClick={handleSubmit}
+          disabled={
+            !(errorText === "") ||
+            passwords.firstPassword !== passwords.secondPassword
+              ? true
+              : false
+          }
+          type="submit"
+        >
+          Prosseguir
+        </Button>
+      </Form>
+    </>
+  );
+};
+
+export default RegisterPassword;

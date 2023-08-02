@@ -2,23 +2,30 @@ import React from "react";
 import { useState } from "react";
 import { Button, Form, Input, MyH4, MyP } from "../Register/style";
 import { checkValues } from "../../utils/regex";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-  };
-
-  const [isEmpty, setIsEmpty] = useState(true);
-  const [errorText, setErrorText] = useState(" ");
+  const navigate = useNavigate();
   const [errorTexts, setErrorTexts] = useState({
     name: "",
     contactNumber: "",
     email: "",
   });
 
-  const handleChange = (e: any) => {
-    e.currentTarget.value === "" ? setIsEmpty(true) : setIsEmpty(false);
+  const [dados, setDados] = useState({
+    name: "",
+    contactNumber: "",
+    email: "",
+    password: "",
+  });
 
+  const handleSubmit = (e: any) => {
+    Cookies.set("@app-barber:data", JSON.stringify(dados));
+    navigate("/register-password");
+  };
+
+  const handleChange = (e: any) => {
     const match = checkValues(e.currentTarget.name, e.target.value);
 
     switch (e.currentTarget.name) {
@@ -33,6 +40,7 @@ const Register: React.FC = () => {
             ...errorTexts,
             name: "",
           });
+          setDados({ ...dados, name: e.currentTarget.value });
         }
         break;
 
@@ -43,11 +51,11 @@ const Register: React.FC = () => {
             contactNumber: "O campo deve conter entre 9 e 10 números",
           });
         } else {
-          setErrorText("");
           setErrorTexts({
             ...errorTexts,
             contactNumber: "",
           });
+          setDados({ ...dados, contactNumber: e.currentTarget.value });
         }
         break;
 
@@ -56,6 +64,7 @@ const Register: React.FC = () => {
           ...errorTexts,
           email: match,
         });
+        setDados({ ...dados, email: e.currentTarget.value });
         break;
     }
   };
@@ -84,7 +93,13 @@ const Register: React.FC = () => {
         <p></p>
         <Button
           onClick={handleSubmit}
-          disabled={!(errorText === "") || isEmpty ? true : false}
+          disabled={
+            !(errorTexts.name === "") ||
+            !(errorTexts.contactNumber === "") ||
+            !(errorTexts.email === "")
+              ? true
+              : false
+          }
           type="submit"
         >
           Prosseguir
