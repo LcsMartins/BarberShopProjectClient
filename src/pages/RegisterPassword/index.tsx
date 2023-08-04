@@ -3,7 +3,7 @@ import { Button, Form, Input, MyH4, MyP } from "../RegisterPassword/style";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { checkValues } from "../../utils/regex";
-import { useParams } from "react-router-dom";
+import { api, token } from "../../services/api";
 
 const RegisterPassword: React.FC = () => {
   const navigate = useNavigate();
@@ -11,16 +11,25 @@ const RegisterPassword: React.FC = () => {
 
   const user: string = Cookies.get("@app-barber:data") as string;
   let userObj = JSON.parse(user);
-
   const [passwords, setPasswords] = useState({
     firstPassword: "",
     secondPassword: "",
   });
 
   const handleSubmit = (e: any) => {
-    navigate("/Login");
+    e.preventDefault();
     userObj["password"] = passwords.firstPassword;
-    console.log(userObj);
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userObj),
+    };
+    fetch(`${api}customer`, requestOptions);
+
+    navigate("/login");
   };
 
   const handleFirstChange = (e: any) => {
@@ -40,19 +49,6 @@ const RegisterPassword: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   return () => {
-  //     Cookies.remove("@app-barber:data");
-  //   };
-  // });
-  useEffect(
-    () => () => {
-      //Cookies.remove("@app-barber:data");
-      console.log("asdas");
-    },
-
-    []
-  );
   return (
     <>
       <Form onSubmit={handleSubmit}>

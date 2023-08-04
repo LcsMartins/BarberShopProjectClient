@@ -8,13 +8,10 @@ import { api } from "../services/api";
 const PrivateRoute: React.FC<ReactRouteProps> = ({ children, ...rest }) => {
   let user = Cookies.get("@app-barber:user");
   const token = Cookies.get("@app-barber:token");
-
   if (user) {
     user = JSON.parse(user);
   }
-
   const { signOut } = useAuth();
-
   const requestOptions = {
     method: "POST",
     headers: {
@@ -24,14 +21,12 @@ const PrivateRoute: React.FC<ReactRouteProps> = ({ children, ...rest }) => {
     },
     body: JSON.stringify({}),
   };
-
   if (token && signOut) {
     fetch(`${api}verify-token`, requestOptions).catch(() => {
       signOut();
     });
   }
-
-  return !token ? <>{children}</> : <Navigate to="/Login" replace />;
+  Cookies.remove("@app-barber:data");
+  return token ? <>{children}</> : <Navigate to="/login" replace />;
 };
-
 export default PrivateRoute;

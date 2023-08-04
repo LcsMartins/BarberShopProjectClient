@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
+  Cookies.remove("@app-barber:data");
+
   const [errorTexts, setErrorTexts] = useState({
     name: "",
     contactNumber: "",

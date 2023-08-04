@@ -1,5 +1,4 @@
 import React, {
-  ReactNode,
   createContext,
   useCallback,
   useState,
@@ -26,7 +25,7 @@ interface SignInCredentials {
 
 interface AuthContextProps {
   user?: User;
-  signIn(credentials: SignInCredentials): Promise<void>;
+  signIn(credentials: SignInCredentials): Promise<number>;
   signOut(): void;
 }
 
@@ -56,7 +55,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         body: JSON.stringify({ email, password }),
       };
 
-      const response = await fetch(`${api}user-auth`, {
+      const response = await fetch(`${api}customer-auth`, {
         ...requestOptions,
         credentials: "include",
       });
@@ -70,6 +69,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         navigate("/home");
       }
+      return response.status;
     },
     [navigate]
   );

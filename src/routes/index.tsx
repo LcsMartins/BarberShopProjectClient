@@ -16,20 +16,20 @@ const PagesRoutes: React.FC = () => (
   <Routes>
     <Route
       element={
-        <PrivateRoute>
+        <>
           <Header />
           <Login />
-        </PrivateRoute>
+        </>
       }
       path="/login"
     />
 
     <Route
       element={
-        <PrivateRoute>
+        <>
           <Header />
           <Register />
-        </PrivateRoute>
+        </>
       }
       path="/register"
     />
